@@ -143,6 +143,17 @@ async def api_health(request):
     })
 
 
+async def api_download_docx(request):
+    doc_path = os.path.join(os.path.dirname(__file__), "Darukaa_Earth_Biodiversity_Intelligence_Submission.docx")
+    if os.path.exists(doc_path):
+        return FileResponse(
+            doc_path,
+            filename="Darukaa_Earth_Biodiversity_Intelligence_Submission.docx",
+            media_type="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        )
+    return JSONResponse({"error": "Submission document not found"}, status_code=404)
+
+
 # Frontend static files serving
 routes = [
     Route("/api/health", api_health, methods=["GET"]),
@@ -151,6 +162,7 @@ routes = [
     Route("/api/enrich", api_enrich, methods=["POST"]),
     Route("/api/benchmarks/{id:int}", api_benchmark, methods=["GET"]),
     Route("/api/sources", api_sources, methods=["GET"]),
+    Route("/api/download-docx", api_download_docx, methods=["GET"]),
 ]
 
 frontend_dist = os.path.join(os.path.dirname(__file__), "frontend", "dist")

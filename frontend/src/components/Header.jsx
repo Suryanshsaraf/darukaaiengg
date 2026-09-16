@@ -1,5 +1,5 @@
 import React from 'react';
-import { Sprout, RotateCcw, Award } from 'lucide-react';
+import { Sprout, RotateCcw, Award, FileDown } from 'lucide-react';
 
 export default function Header({ onReset }) {
   return (
@@ -37,14 +37,24 @@ export default function Header({ onReset }) {
           <span className="bg-slate-800 text-slate-200 px-2 py-0.5 rounded font-mono">Clarity 10%</span>
         </div>
 
-        {/* Right: Reset Action */}
-        <div className="flex items-center space-x-2">
+        {/* Right: Actions */}
+        <div className="flex items-center space-x-2.5">
+          <a
+            href="/api/download-docx"
+            download="Darukaa_Earth_Biodiversity_Intelligence_Submission.docx"
+            className="flex items-center space-x-1.5 text-xs font-bold text-emerald-300 hover:text-white bg-emerald-950/80 hover:bg-emerald-900 border border-emerald-700/60 px-3 py-2 rounded-xl transition shadow-sm"
+            title="Download the mandatory Hackathon Word Document (.docx)"
+          >
+            <FileDown className="w-3.5 h-3.5 text-emerald-400" />
+            <span>Submission Word Doc (.docx)</span>
+          </a>
+
           <button
             onClick={onReset}
             className="flex items-center space-x-1.5 text-xs text-slate-400 hover:text-white bg-slate-800/80 hover:bg-slate-700 px-3 py-2 rounded-xl border border-slate-700 transition"
           >
             <RotateCcw className="w-3.5 h-3.5" />
-            <span>Reset Session</span>
+            <span>Reset</span>
           </button>
         </div>
       </div>

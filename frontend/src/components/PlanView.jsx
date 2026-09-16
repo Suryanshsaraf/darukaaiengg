@@ -84,15 +84,15 @@ export default function PlanView({ plan, onOpenTrace, onDownloadJson }) {
       </div>
 
       {/* 2. Visualizations & Controls Bar */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-5 items-stretch">
         {/* Radar Chart */}
-        <div className="md:col-span-2">
+        <div className="md:col-span-7 flex flex-col">
           <RadarChart profile={profile} recommendations={recs} />
         </div>
 
         {/* Action & Gate Status Card */}
-        <div className="bg-slate-800/80 border border-slate-700/80 rounded-xl p-5 space-y-4">
-          <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400">
+        <div className="md:col-span-5 bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-4 flex flex-col justify-between shadow-lg">
+          <h4 className="text-xs font-bold uppercase tracking-wider text-slate-300 pb-2 border-b border-slate-800/80">
             Acceptance Gate Audit
           </h4>
 

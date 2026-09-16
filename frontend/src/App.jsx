@@ -175,15 +175,15 @@ export default function App() {
       {/* 1. Header */}
       <Header onReset={handleReset} />
 
-      {/* 2. Main Content Container */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+      {/* 2. Main Content Container - Full Screen Fluid Width */}
+      <main className="flex-1 w-full px-3 sm:px-5 lg:px-7 xl:px-9 py-4 space-y-4">
         {/* Benchmark Proof Bar */}
         <BenchmarkBar onSelectBenchmark={handleSelectBenchmark} />
 
-        {/* 3. Core Working Area (2-Column Grid) */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-          {/* Left Column: Interactive Inputs & Dialogue (5 cols) */}
-          <div className="lg:col-span-5 space-y-4">
+        {/* 3. Core Working Area (Full Widescreen Responsive Layout) */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+          {/* Left Column: Interactive Inputs & Dialogue (5 cols on lg, 4 cols on 2xl) */}
+          <div className="lg:col-span-5 2xl:col-span-4 space-y-3">
             {/* Input Mode Navigation Tabs */}
             <div className="flex rounded-xl bg-slate-900 p-1 border border-slate-800 text-xs font-semibold">
               <button
@@ -226,8 +226,8 @@ export default function App() {
             )}
           </div>
 
-          {/* Right Column: Verified Plan & Deep Scientific Proof (7 cols) */}
-          <div className="lg:col-span-7">
+          {/* Right Column: Verified Plan & Deep Scientific Proof (7 cols on lg, 8 cols on 2xl) */}
+          <div className="lg:col-span-7 2xl:col-span-8">
             {activePlan ? (
               <PlanView
                 plan={activePlan}

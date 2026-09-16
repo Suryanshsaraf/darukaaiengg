@@ -1,0 +1,47 @@
+name: Darukaa.Earth CI/CD Pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  test:
+    name: Scientific Validation & Acceptance Gates
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.11", "3.12", "3.13"]
+
+    steps:
+    - name: Check out repository code
+      uses: actions/checkout@v4
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Install Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Syntax & Compilation Check
+      run: |
+        python -m py_compile app.py run_cli.py core/*.py knowledge/*.py reasoning/*.py conversation/*.py
+
+    - name: Execute Automated Test Suite
+      env:
+        PYTHONPATH: .
+      run: |
+        python -m unittest discover -s tests -p "test_*.py" -v
+
+    - name: Verify Core Hackathon Benchmarks
+      env:
+        PYTHONPATH: .
+      run: |
+        python run_cli.py --benchmark 1
+        python run_cli.py --benchmark 2
+        python run_cli.py --benchmark 3

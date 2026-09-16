@@ -248,7 +248,7 @@ def create_docx(filename: str):
     links_data = [
         ["Project Item", "Specification / URL"],
         ["GitHub Repository Link", "https://github.com/Suryanshsaraf/darukaaiengg.git"],
-        ["Live Interactive Web Console", "Streamlit Cloud / Localhost: http://localhost:8501"],
+        ["Live Interactive Web Console", "React Web Application & API: http://localhost:8000"],
         ["Automated Test Suite", "15 automated unit & benchmark tests passing (0.008s execution)"],
         ["CI/CD Pipeline", "GitHub Actions workflow running matrix tests on Python 3.11, 3.12, 3.13"]
     ]
@@ -341,7 +341,7 @@ def create_docx(filename: str):
     doc.append(p("Steps for Reviewers to Execute the Project Locally:", bold=True, size=21))
     doc.append(p("1. Clone Repository: git clone https://github.com/Suryanshsaraf/darukaaiengg.git"))
     doc.append(p("2. Install Dependencies: pip install -r requirements.txt"))
-    doc.append(p("3. Launch Web Dashboard: streamlit run app.py (Open http://localhost:8501)"))
+    doc.append(p("3. Launch Web Dashboard: python server.py (Open http://localhost:8000)"))
     doc.append(p("4. Run CLI Benchmarks: python run_cli.py --benchmark 2"))
     doc.append(p("5. Run Automated Tests: python -m unittest discover -s tests -p 'test_*.py' -v"))
 
@@ -349,7 +349,7 @@ def create_docx(filename: str):
     doc.append(h2("6. Reviewer Notes & Credentials"))
     doc.append(p(
         "• No proprietary API keys (e.g. OpenAI/Anthropic) are required to execute or test this project. The system runs completely offline, deterministic, and self-contained.\n"
-        "• All algorithms, equations, data loaders, and retrieval ranking logic are implemented in pure Python with standard libraries (Streamlit, Plotly, Pandas, NumPy).\n"
+        "• The system architecture features a decoupled modern React + Tailwind frontend paired with a high-performance Python REST decision engine.\n"
         "• For questions, contact: Suryansh Saraf (Author/Maintainer) via the GitHub repository."
     ))
 

@@ -104,11 +104,20 @@ source .venv/bin/activate  # On Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-### 2. Launch Interactive Web Console
+### 2. Launch Full-Stack React Web Console
 ```bash
-streamlit run app.py
+# Start the unified API and React application
+python server.py
 ```
-Open [http://localhost:8501](http://localhost:8501) in your browser.
+Open [http://localhost:8000](http://localhost:8000) in your browser.
+
+*(Optional for Frontend Development with Hot Reloading)*:
+```bash
+cd frontend
+npm install
+npm run dev
+# Opens Vite dev server on http://localhost:5173
+```
 
 ### 3. Run Command-Line Scientific Interface
 ```bash

@@ -1,9 +1,13 @@
 # Darukaa.Earth: AI Biodiversity Intelligence Decision System
 
+[![Live Demo: GitHub Pages](https://img.shields.io/badge/Live%20Demo-GitHub%20Pages-059669?logo=github&style=for-the-badge)](https://suryanshsaraf.github.io/darukaaiengg/)
 [![CI/CD Pipeline](https://github.com/Suryanshsaraf/darukaaiengg/actions/workflows/ci.yml/badge.svg)](https://github.com/Suryanshsaraf/darukaaiengg/actions)
 [![Python 3.11 | 3.12 | 3.13](https://img.shields.io/badge/Python-3.11%20%7C%203.12%20%7C%203.13-3776AB?logo=python&logoColor=white)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Scientific Evidence: FAO / IPCC / IPBES / Science / Nature](https://img.shields.io/badge/Evidence-Peer--Reviewed%20%26%20UN%20Tier--1-059669)](https://www.fao.org/soils-2015/events/detail/en/c/284344/)
+
+> **🌐 Live Interactive System:** **[https://suryanshsaraf.github.io/darukaaiengg/](https://suryanshsaraf.github.io/darukaaiengg/)**  
+> Evaluators and reviewers can immediately interact with the decision engine, run the 3 core benchmark moments, inspect deep retrieval traces, and download the official Word submission document (`.docx`) without requiring any local installation.
 
 An inspectable, knowledge-grounded ecological decision system engineered for the **Darukaa.Earth Hackathon Challenge**. This system functions as an **AI Environmental Scientist**, rejecting shallow generic chatbot prompts in favor of a deterministic multi-variable causal diagnostic engine backed by a metadata-filtered hybrid retrieval layer and structured scientific evidence graph.
 
@@ -177,5 +181,6 @@ If the repository is kept private during evaluation, repository access has been 
 - `utkarsh.gauniyal@darukaa.com`
 - `guneet.mutreja@darukaa.com`
 
-GitHub Repository: [https://github.com/Suryanshsaraf/darukaaiengg.git](https://github.com/Suryanshsaraf/darukaaiengg.git)
-Submission Document: `Darukaa_Earth_Biodiversity_Intelligence_Submission.docx`
+- **Live Interactive System (GitHub Pages)**: [https://suryanshsaraf.github.io/darukaaiengg/](https://suryanshsaraf.github.io/darukaaiengg/)
+- **GitHub Repository**: [https://github.com/Suryanshsaraf/darukaaiengg.git](https://github.com/Suryanshsaraf/darukaaiengg.git)
+- **Word Submission Document**: `Darukaa_Earth_Biodiversity_Intelligence_Submission.docx`

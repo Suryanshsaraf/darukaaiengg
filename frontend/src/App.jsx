@@ -6,6 +6,12 @@ import SiteMatrix from './components/SiteMatrix';
 import PlanView from './components/PlanView';
 import RetrievalTraceModal from './components/RetrievalTraceModal';
 import { MessageSquare, Sliders, Database, Sparkles, BookOpen } from 'lucide-react';
+import {
+  processClientMessage,
+  diagnoseClientProfile,
+  enrichClientCoordinates,
+  BENCHMARK_SCENARIOS
+} from './engine/decisionEngine';
 
 export default function App() {
   const [messages, setMessages] = useState([]);
@@ -60,15 +66,31 @@ export default function App() {
         ]);
       }
     } catch (err) {
-      console.error("Chat error:", err);
-      // Fallback message
-      setMessages((prev) => [
-        ...prev,
-        {
-          role: 'assistant',
-          content: "Encountered network error communicating with local decision engine. Please verify the Python API is active."
-        }
-      ]);
+      console.warn("Backend unavailable, executing in-browser decision engine:", err);
+      const fallback = processClientMessage(text);
+      if (fallback.type === 'clarification') {
+        setMessages((prev) => [
+          ...prev,
+          {
+            role: 'assistant',
+            type: 'clarification',
+            content: fallback.assistant_message,
+            data: fallback
+          }
+        ]);
+      } else if (fallback.type === 'verified_plan' || fallback.plan) {
+        setActivePlan(fallback.plan);
+        setRetrievalTrace(fallback.plan.retrieval_trace);
+        setMessages((prev) => [
+          ...prev,
+          {
+            role: 'assistant',
+            type: 'verified_plan',
+            content: fallback.assistant_message,
+            data: fallback
+          }
+        ]);
+      }
     } finally {
       setIsLoading(false);
     }
@@ -87,7 +109,10 @@ export default function App() {
       setActivePlan(plan);
       setRetrievalTrace(plan.retrieval_trace);
     } catch (err) {
-      console.error("Diagnosis error:", err);
+      console.warn("Backend unavailable, generating client-side diagnosis:", err);
+      const plan = diagnoseClientProfile(profileData);
+      setActivePlan(plan);
+      setRetrievalTrace(plan.retrieval_trace);
     } finally {
       setIsLoading(false);
     }
@@ -103,8 +128,39 @@ export default function App() {
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       return await res.json();
     } catch (err) {
-      console.error("Enrichment error:", err);
-      return null;
+      console.warn("Backend unavailable, using client-side geo-enrichment:", err);
+      return enrichClientCoordinates(lat, lon);
+    }
+  };
+
+  const applyBenchmarkData = (benchmarkId, data) => {
+    if (benchmarkId === 1) {
+      setMessages([
+        { role: 'user', content: 'Biodiversity is declining on my land' },
+        {
+          role: 'assistant',
+          type: 'clarification',
+          content: data.assistant_message,
+          data: data
+        }
+      ]);
+      setActivePlan(null);
+      setActiveTab('chat');
+    } else {
+      setActivePlan(data.plan);
+      setRetrievalTrace(data.plan.retrieval_trace);
+      setMessages([
+        { role: 'user', content: data.prompt || "Site assessment scenario" },
+        {
+          role: 'assistant',
+          type: 'verified_plan',
+          content: data.assistant_message,
+          data: data
+        }
+      ]);
+      if (benchmarkId === 3) {
+        setIsTraceOpen(true);
+      }
     }
   };
 
@@ -114,39 +170,11 @@ export default function App() {
       const res = await fetch(`/api/benchmarks/${benchmarkId}`);
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
-
-      if (benchmarkId === 1) {
-        // Vague input
-        setMessages([
-          { role: 'user', content: 'Biodiversity is declining on my land' },
-          {
-            role: 'assistant',
-            type: 'clarification',
-            content: data.assistant_message,
-            data: data
-          }
-        ]);
-        setActivePlan(null);
-        setActiveTab('chat');
-      } else {
-        // Benchmark 2 or 3
-        setActivePlan(data.plan);
-        setRetrievalTrace(data.plan.retrieval_trace);
-        setMessages([
-          { role: 'user', content: data.prompt },
-          {
-            role: 'assistant',
-            type: 'verified_plan',
-            content: data.assistant_message,
-            data: data
-          }
-        ]);
-        if (benchmarkId === 3) {
-          setIsTraceOpen(true);
-        }
-      }
+      applyBenchmarkData(benchmarkId, data);
     } catch (err) {
-      console.error("Benchmark error:", err);
+      console.warn("Backend benchmark unavailable, using client scenario:", err);
+      const fallbackData = BENCHMARK_SCENARIOS[benchmarkId] || BENCHMARK_SCENARIOS[2];
+      applyBenchmarkData(benchmarkId, fallbackData);
     } finally {
       setIsLoading(false);
     }

@@ -40,10 +40,10 @@ export default function Header({ onReset }) {
         {/* Right: Actions */}
         <div className="flex items-center space-x-2.5">
           <a
-            href="/api/download-docx"
+            href="./Darukaa_Earth_Biodiversity_Intelligence_Submission.docx"
             download="Darukaa_Earth_Biodiversity_Intelligence_Submission.docx"
             className="flex items-center space-x-1.5 text-xs font-bold text-emerald-300 hover:text-white bg-emerald-950/80 hover:bg-emerald-900 border border-emerald-700/60 px-3 py-2 rounded-xl transition shadow-sm"
-            title="Download the mandatory Hackathon Word Document (.docx)"
+            title="Download the official Hackathon Word Submission Document (.docx)"
           >
             <FileDown className="w-3.5 h-3.5 text-emerald-400" />
             <span>Submission Word Doc (.docx)</span>

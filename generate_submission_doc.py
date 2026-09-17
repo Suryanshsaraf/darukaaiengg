@@ -247,10 +247,11 @@ def create_docx(filename: str):
     
     links_data = [
         ["Project Item", "Specification / URL"],
+        ["Live Interactive System (GitHub Pages)", "https://suryanshsaraf.github.io/darukaaiengg/"],
         ["GitHub Repository Link", "https://github.com/Suryanshsaraf/darukaaiengg.git"],
-        ["Live Interactive Web Console", "React Web Application & API: http://localhost:8000"],
+        ["Local Developer Console & API", "Starlette REST API: http://localhost:8000 / React Web UI"],
         ["Automated Test Suite", "15 automated unit & benchmark tests passing (0.008s execution)"],
-        ["CI/CD Pipeline", "GitHub Actions workflow running matrix tests on Python 3.11, 3.12, 3.13"]
+        ["CI/CD & Deploy Pipeline", "GitHub Actions workflow: Automated Unit Tests + GitHub Pages Deployment"]
     ]
     doc.append(table_2col(links_data[0], links_data[1:]))
 

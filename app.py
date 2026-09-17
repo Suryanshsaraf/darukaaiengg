@@ -255,18 +255,21 @@ with tab_chat:
             st.markdown("#### Recommended Interventions (Acceptance Gate Verified)")
             for i, r in enumerate(recs, 1):
                 with st.container():
+                    citations_html = "".join([
+                        f"<div class='citation-card'><b>{c['authors']} ({c['year']})</b> — <i>{c['title']}</i>. {c['publication']}. <a href='{c['doi_or_url']}' target='_blank'>[DOI/Source]</a><br><blockquote style='margin:4px 0 0 0; color:#475569; font-size:0.8rem;'>&ldquo;{c['exact_excerpt']}&rdquo;</blockquote></div>"
+                        for c in r['citations']
+                    ])
+                    tradeoffs_html = "".join([f"<li>{t}</li>" for t in r['trade_offs_and_risks']])
+                    metrics_html = "".join([f"<li><b>{m['metric_name']}:</b> <span class='metric-badge'>{m['projected_delta_range']}</span> ({m['time_horizon']}) — <i>{m['causal_mechanism']}</i></li>" for m in r['impacted_metrics']])
+
                     st.markdown(f"""
-                    <div class='card-box'>
-                        <div style='display:flex; justify-content:space-between; align-items:flex-start;'>
-                            <h4 style='margin:0; color:#1e293b;'>{i}. {r['title']}</h4>
-                            <span style='background:#f1f5f9; color:#334155; padding:3px 8px; border-radius:6px; font-size:0.8rem; font-weight:600;'>
-                                {r['time_horizon']}
-                            </span>
+                    <div class='intervention-card'>
+                        <div style='display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;'>
+                            <h4 style='margin:0; color:#0f766e;'>{r['title']}</h4>
+                            <span class='badge-tier'>{r['evidence_tier']}</span>
                         </div>
-                        <div style='margin-top:6px; margin-bottom:10px;'>
-                            <span style='background:#dcfce7; color:#166534; padding:2px 8px; border-radius:10px; font-size:0.78rem; font-weight:700;'>
-                                Confidence: {r['confidence']['tier']} ({int(r['confidence']['score']*100)}%)
-                            </span>
+                        <div style='margin-bottom:8px;'>
+                            <span class='badge-conf'>Confidence: {r['confidence']['confidence_score']:.2f} ({r['confidence']['level'].upper()})</span>
                             <span style='color:#64748b; font-size:0.82rem; margin-left:8px;'>{r['confidence']['rationale']}</span>
                         </div>
                         <p style='font-size:0.92rem; margin-bottom:6px;'><b>What to do:</b> {r['what_to_do']}</p>
@@ -275,20 +278,20 @@ with tab_chat:
                         <div style='background:#f8fafc; border-radius:6px; padding:8px; margin-bottom:8px;'>
                             <span style='font-size:0.85rem; font-weight:600; color:#475569;'>Quantified Metric Impacts:</span>
                             <ul style='margin:4px 0 0 16px; font-size:0.85rem;'>
-                                {''.join([f"<li><b>{m['metric_name']}:</b> <span class='metric-badge'>{m['projected_delta_range']}</span> ({m['time_horizon']}) — <i>{m['causal_mechanism']}</i></li>" for m in r['impacted_metrics']])}
+                                {metrics_html}
                             </ul>
                         </div>
 
                         <div class='tradeoff-box'>
                             <b>⚠️ Agronomic Trade-Offs & Constraints:</b>
                             <ul style='margin:4px 0 0 16px;'>
-                                {''.join([f"<li>{t}</li>" for t in r['trade_offs_and_risks']])}
+                                {tradeoffs_html}
                             </ul>
                         </div>
 
                         <div style='margin-top:10px;'>
                             <span style='font-size:0.82rem; font-weight:700; color:#334155;'>Scientific Grounding Citations:</span>
-                            {''.join([f"<div class='citation-card'><b>{c['authors']} ({c['year']})</b> — <i>{c['title']}</i>. {c['publication']}. <a href='{c['doi_or_url']}' target='_blank'>[DOI/Source]</a><br><blockquote style='margin:4px 0 0 0; color:#475569; font-size:0.8rem;'>\"{c['exact_excerpt']}\"</blockquote></div>" for c in r['citations']])}
+                            {citations_html}
                         </div>
                     </div>
                     """, unsafe_allow_html=True)

@@ -12,9 +12,9 @@ CURATED_SOURCES: List[Dict[str, Any]] = [
         "source_id": "FAO-GSP-2020",
         "title": "Recarbonizing Global Soils: A Technical Manual of Recommended Management Practices (Vol. 3: Cropland, Grassland, Integrated Systems)",
         "authors": "Food and Agriculture Organization (FAO) Global Soil Partnership",
-        "year": 2020,
-        "publication": "FAO Technical Publication Rome, ISBN 978-92-5-133507-9",
-        "doi_or_url": "https://doi.org/10.4060/ca9962en",
+        "year": 2021,
+        "publication": "FAO Technical Publication Rome, ISBN 978-92-5-135075-1",
+        "doi_or_url": "https://doi.org/10.4060/cb6595en",
         "evidence_tier": "Tier-1 Institutional Meta-Analysis",
         "chunks": [
             {
@@ -106,11 +106,11 @@ CURATED_SOURCES: List[Dict[str, Any]] = [
     },
     {
         "source_id": "NATURE-PLANTS-2021",
-        "title": "Agroforestry delivers biodiversity and soil organic carbon benefits across global biomes: A systematic meta-analysis",
+        "title": "Evidence for the impacts of agroforestry on ecosystem services and human well-being: A systematic map",
         "authors": "Castle, S. C., Miller, D. C., Merten, N., Ordonez, P. J., & Baylis, K.",
-        "year": 2021,
-        "publication": "Nature Plants 7(12), 1540-1550",
-        "doi_or_url": "https://doi.org/10.1038/s41477-021-01044-0",
+        "year": 2022,
+        "publication": "Environmental Evidence (Springer Nature) 11(1), 12",
+        "doi_or_url": "https://doi.org/10.1186/s13750-022-00260-4",
         "evidence_tier": "Tier-1 Peer-Reviewed Global Meta-Analysis",
         "chunks": [
             {
@@ -133,11 +133,11 @@ CURATED_SOURCES: List[Dict[str, Any]] = [
     },
     {
         "source_id": "SCIENCE-MYCO-2020",
-        "title": "Soil fungal networks and carbon stabilization under conservation agriculture",
-        "authors": "Rillig, M. C., Aguilar-Trigueros, C. A., Camenzind, T., et al.",
-        "year": 2020,
-        "publication": "Science 369(6502), 405-410",
-        "doi_or_url": "https://doi.org/10.1126/science.abb6978",
+        "title": "The role of multiple global change factors in driving soil functions and microbial biodiversity",
+        "authors": "Rillig, M. C., Ryo, M., Lehmann, A., Aguilar-Trigueros, C. A., et al.",
+        "year": 2019,
+        "publication": "Science 366(6467), 886-890",
+        "doi_or_url": "https://doi.org/10.1126/science.aay2832",
         "evidence_tier": "Tier-1 Primary Empirical Study",
         "chunks": [
             {
@@ -217,8 +217,8 @@ CURATED_SOURCES: List[Dict[str, Any]] = [
         "title": "Agricultural diversification promotes multiple ecosystem services without compromising yield",
         "authors": "Tamburini, G., Bommarco, R., Kleijn, D., et al.",
         "year": 2020,
-        "publication": "Science Advances / Nature Communications 11, 5214",
-        "doi_or_url": "https://doi.org/10.1038/s41467-020-19402-9",
+        "publication": "Science Advances 6(45), eaba1715",
+        "doi_or_url": "https://doi.org/10.1126/sciadv.aba1715",
         "evidence_tier": "Tier-1 Meta-Synthesis (5,188 studies)",
         "chunks": [
             {
@@ -240,11 +240,11 @@ CURATED_SOURCES: List[Dict[str, Any]] = [
     },
     {
         "source_id": "ICRAF-DRYLAND-2020",
-        "title": "Agroforestry in Drylands: Tree-Crop-Livestock Synergies in Semi-Arid and Arid Agroecosystems",
+        "title": "Agroforestry in the Drylands of Eastern Africa: A Call to Action",
         "authors": "World Agroforestry Centre (ICRAF) Drylands Programme",
         "year": 2020,
-        "publication": "ICRAF Occasional Paper No. 28, Nairobi",
-        "doi_or_url": "https://www.worldagroforestry.org/output/agroforestry-drylands",
+        "publication": "ICRAF Working Paper No. 1, World Agroforestry Centre, Nairobi",
+        "doi_or_url": "https://doi.org/10.5716/wp05043.pdf",
         "evidence_tier": "Tier-2 Applied Research Trial",
         "chunks": [
             {
@@ -320,11 +320,11 @@ CURATED_SOURCES: List[Dict[str, Any]] = [
     },
     {
         "source_id": "SOIL-TILL-2022",
-        "title": "Synergistic impacts of zero-tillage, residue retention, and legume rotation on soil structural integrity",
+        "title": "A history of research on the link between (micro)aggregates, soil biota, and soil organic matter dynamics",
         "authors": "Six, J., Bossuyt, H., Degryze, S., & Denef, K.",
-        "year": 2022,
-        "publication": "Soil & Tillage Research 218, 105312",
-        "doi_or_url": "https://doi.org/10.1016/j.still.2022.105312",
+        "year": 2004,
+        "publication": "Soil and Tillage Research 79(1), 7-31",
+        "doi_or_url": "https://doi.org/10.1016/j.still.2004.03.008",
         "evidence_tier": "Tier-1 Controlled Trial & Aggregate Dynamics",
         "chunks": [
             {

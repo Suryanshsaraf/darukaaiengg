@@ -32,17 +32,17 @@ class TestModels(unittest.TestCase):
         cite = ScientificCitation(
             citation_id="FAO-TEST-1",
             authors="FAO Global Soil Partnership",
-            year=2020,
+            year=2021,
             title="Recarbonizing Global Soils",
             publication="FAO Rome",
-            doi_or_url="https://doi.org/10.4060/ca9962en",
+            doi_or_url="https://doi.org/10.4060/cb6595en",
             exact_excerpt="Cover cropping increases SOC by 0.15% to 0.35%",
             evidence_tier="Tier-1 Institutional Meta-Analysis",
             relevance_score=0.92
         )
         d = cite.to_dict()
         self.assertEqual(d["citation_id"], "FAO-TEST-1")
-        self.assertEqual(d["year"], 2020)
+        self.assertEqual(d["year"], 2021)
         self.assertIn("10.4060", d["doi_or_url"])
 
 

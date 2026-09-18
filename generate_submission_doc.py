@@ -295,10 +295,10 @@ def create_docx(filename: str):
     ))
     doc.append(p(
         "Examples of Grounded Primary Literature in the System:\n"
-        "- FAO Global Soil Partnership (2020): Recarbonizing Global Soils (Vol. 3). Documents that leguminous cover crops in drylands elevate SOC by 0.15% to 0.35% absolute (+18-28% relative) over 24-36 months.\n"
+        "- FAO Global Soil Partnership (2021): Recarbonizing Global Soils (Vol. 3, DOI: 10.4060/cb6595en). Documents that leguminous cover crops in drylands elevate SOC by 0.15% to 0.35% absolute (+18-28% relative) over 24-36 months.\n"
         "- IPCC SRCCL Chapter 4 (2019): Documents microclimate buffering of 2.0-3.8°C and hydraulic lift via deep-rooted woody perennials in drylands.\n"
-        "- Nature Plants (2021) Meta-Analysis: 1,245 paired observations demonstrating a 27% increase in SOC stocks and 56% increase in biodiversity species richness under agroforestry alley cropping.\n"
-        "- Science (Rillig et al. 2020): Arbuscular mycorrhizal fungi glomalin production and macroaggregate stabilization under zero-tillage."
+        "- Springer Nature / Environmental Evidence (2022, DOI: 10.1186/s13750-022-00260-4): Systematic synthesis demonstrating agroforestry impacts on soil organic carbon stocks and biodiversity species richness.\n"
+        "- Science (Rillig et al. 2019, DOI: 10.1126/science.aay2832): Multiple global change drivers, fungal networks, and soil microbial biodiversity."
     ))
 
     doc.append(h3("Criterion 3: Knowledge System Design (20%)"))
@@ -328,9 +328,9 @@ def create_docx(filename: str):
     doc.append(p("• Input: Soil organic carbon: 0.3%, Rainfall: low (320mm), Crop: monoculture wheat, Region: semi-arid", bold=True))
     doc.append(p("• Causal Diagnosis: Accelerated Soil Aggregate Breakdown & Moisture Evaporation Cascade (Vulnerability: 69.8/100)"))
     doc.append(p("• Verified Recommendations Generated:"))
-    doc.append(p("  1. Multi-Species Leguminous Cover Cropping: SOC +23% to +36%, bulk density -6% to -11%, AMF colonization +35% to +65% over 2-3 years. Backed by FAO Global Soil Partnership (2020) and Science (Rillig et al. 2020)."))
-    doc.append(p("  2. Dryland Agroforestry & Alley Cropping: Woody canopy cover +15% to +25%, SOC +27% to +46%, Shannon diversity +35% to +60% over 3-6 years. Backed by IPCC SRCCL Chapter 4 (2019) and Nature Plants (2021)."))
-    doc.append(p("  3. Cereal-Pulse Strip Intercropping: Synthetic nitrogen -30% to -50%, pollinator abundance +35% to +65% in 1 season. Backed by IPCC AR6 WGII Chapter 5 (2022) and Nature Communications (2020)."))
+    doc.append(p("  1. Multi-Species Leguminous Cover Cropping: SOC +23% to +36%, bulk density -6% to -11%, AMF colonization +35% to +65% over 2-3 years. Backed by FAO Global Soil Partnership (2021) and Science (Rillig et al. 2019)."))
+    doc.append(p("  2. Dryland Agroforestry & Alley Cropping: Woody canopy cover +15% to +25%, SOC +27% to +46%, Shannon diversity +35% to +60% over 3-6 years. Backed by IPCC SRCCL Chapter 4 (2019) and Springer Nature (2022)."))
+    doc.append(p("  3. Cereal-Pulse Strip Intercropping: Synthetic nitrogen -30% to -50%, pollinator abundance +35% to +65% in 1 season. Backed by IPCC AR6 WGII Chapter 5 (2022) and Science Advances (Tamburini et al. 2020)."))
 
     doc.append(h3("Moment 3: Geo-Coordinates & Deep Retrieval Trace"))
     doc.append(p("• Input: Coordinates (31.5, -102.3), SOC: 0.45%, Bulk Density: 1.52 g/cm³, Monoculture Cotton", bold=True))

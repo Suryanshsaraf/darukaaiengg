@@ -77,12 +77,12 @@ $$\implies \textbf{Accelerated Soil Aggregate Breakdown \& Moisture Evaporation 
 
 ### 2. Scientific Knowledge Base & Hybrid Retrieval (`knowledge/`)
 Indexed library of 16 peer-reviewed and UN institutional publications:
-- **FAO Global Soil Partnership (2020)**: *Recarbonizing Global Soils (Vol. 3)* (DOI: 10.4060/ca9962en)
+- **FAO Global Soil Partnership (2021)**: *Recarbonizing Global Soils (Vol. 3)* (DOI: 10.4060/cb6595en)
 - **IPCC Special Report on Climate Change and Land (2019)**: *Chapter 4: Land Degradation*
 - **IPCC AR6 WGII (2022)**: *Chapter 5: Food, Fibre, and Other Ecosystem Products* (DOI: 10.1017/9781009325844.007)
 - **IPBES Global Assessment (2019)**: *Drivers of Agroecosystem Biodiversity Loss* (DOI: 10.5281/zenodo.3831673)
-- **Nature Plants (2021)**: *Agroforestry Meta-Analysis on Soil Carbon & Biodiversity* (DOI: 10.1038/s41477-021-01044-0)
-- **Science (2020)**: *Soil fungal networks and carbon stabilization under conservation agriculture* (DOI: 10.1126/science.abb6978)
+- **Springer Nature / Env. Evidence (2022)**: *Agroforestry Synthesis on Ecosystem Services & Biodiversity* (DOI: 10.1186/s13750-022-00260-4)
+- **Science (2019)**: *Drivers of soil functions and microbial biodiversity* (DOI: 10.1126/science.aay2832)
 - **IUCN Nature-based Solutions (2021)**: *Global Standard for Agricultural Landscapes* (DOI: 10.2305/IUCN.CH.2020.08.en)
 
 **Hybrid Retrieval Formulation:**

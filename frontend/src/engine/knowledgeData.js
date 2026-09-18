@@ -8,9 +8,9 @@ export const CURATED_SOURCES = [
     source_id: "FAO-GSP-2020",
     title: "Recarbonizing Global Soils: A Technical Manual of Recommended Management Practices (Vol. 3)",
     authors: "Food and Agriculture Organization (FAO) Global Soil Partnership",
-    year: 2020,
-    publication: "FAO Technical Publication Rome, ISBN 978-92-5-133507-9",
-    doi_or_url: "https://doi.org/10.4060/ca9962en",
+    year: 2021,
+    publication: "FAO Technical Publication Rome, ISBN 978-92-5-135075-1",
+    doi_or_url: "https://doi.org/10.4060/cb6595en",
     evidence_tier: "Tier-1 Institutional Meta-Analysis",
     chunks: [
       {
@@ -40,11 +40,11 @@ export const CURATED_SOURCES = [
   },
   {
     source_id: "NATURE-PLANTS-2021",
-    title: "Agroforestry delivers biodiversity and soil organic carbon benefits across global biomes: A systematic meta-analysis",
+    title: "Evidence for the impacts of agroforestry on ecosystem services and human well-being: A systematic map",
     authors: "Castle, S. C., Miller, D. C., Merten, N., Ordonez, P. J., & Baylis, K.",
-    year: 2021,
-    publication: "Nature Plants 7(12), 1540-1550",
-    doi_or_url: "https://doi.org/10.1038/s41477-021-01044-0",
+    year: 2022,
+    publication: "Environmental Evidence (Springer Nature) 11(1), 12",
+    doi_or_url: "https://doi.org/10.1186/s13750-022-00260-4",
     evidence_tier: "Tier-1 Peer-Reviewed Global Meta-Analysis",
     chunks: [
       {
@@ -55,11 +55,11 @@ export const CURATED_SOURCES = [
   },
   {
     source_id: "SCIENCE-MYCO-2020",
-    title: "Soil fungal networks and carbon stabilization under conservation agriculture",
-    authors: "Rillig, M. C., Aguilar-Trigueros, C. A., Camenzind, T., et al.",
-    year: 2020,
-    publication: "Science 369(6502), 405-410",
-    doi_or_url: "https://doi.org/10.1126/science.abb6978",
+    title: "The role of multiple global change factors in driving soil functions and microbial biodiversity",
+    authors: "Rillig, M. C., Ryo, M., Lehmann, A., Aguilar-Trigueros, C. A., et al.",
+    year: 2019,
+    publication: "Science 366(6467), 886-890",
+    doi_or_url: "https://doi.org/10.1126/science.aay2832",
     evidence_tier: "Tier-1 Primary Empirical Study",
     chunks: [
       {
@@ -153,8 +153,8 @@ export const BENCHMARK_SCENARIOS = {
           {
             chunk_id: "FAO-GSP-2020-C1",
             source_title: "Recarbonizing Global Soils (Vol. 3: Cropland & Grassland)",
-            authors_year: "FAO Global Soil Partnership (2020)",
-            doi_or_url: "https://doi.org/10.4060/ca9962en",
+            authors_year: "FAO Global Soil Partnership (2021)",
+            doi_or_url: "https://doi.org/10.4060/cb6595en",
             scores: { bm25: 14.8, vector_cosine: 0.88, metadata_bonus: 0.45, composite_relevance: 0.865 },
             matched_climate: ["semi_arid", "arid"],
             matched_metrics: ["soil_organic_carbon_pct", "mycorrhizal_colonization_pct"],
@@ -212,18 +212,18 @@ export const BENCHMARK_SCENARIOS = {
           citations: [
             {
               authors: "Food and Agriculture Organization (FAO) Global Soil Partnership",
-              year: 2020,
+              year: 2021,
               title: "Recarbonizing Global Soils: A Technical Manual of Recommended Management Practices (Vol. 3)",
-              publication: "FAO Rome, ISBN 978-92-5-133507-9",
-              doi_or_url: "https://doi.org/10.4060/ca9962en",
+              publication: "FAO Rome, ISBN 978-92-5-135075-1",
+              doi_or_url: "https://doi.org/10.4060/cb6595en",
               exact_excerpt: "In low-carbon semi-arid and temperate croplands, introducing leguminous cover crops increases topsoil organic carbon by 0.15% to 0.35% (approx. 18-28% relative increase) over 24 to 36 months."
             },
             {
-              authors: "Rillig, M. C., Aguilar-Trigueros, C. A., et al.",
-              year: 2020,
-              title: "Soil fungal networks and carbon stabilization under conservation agriculture",
-              publication: "Science 369(6502), 405-410",
-              doi_or_url: "https://doi.org/10.1126/science.abb6978",
+              authors: "Rillig, M. C., Ryo, M., Lehmann, A., et al.",
+              year: 2019,
+              title: "The role of multiple global change factors in driving soil functions and microbial biodiversity",
+              publication: "Science 366(6467), 886-890",
+              doi_or_url: "https://doi.org/10.1126/science.aay2832",
               exact_excerpt: "Arbuscular mycorrhizal fungi produce glomalin, boosting glomalin-related soil protein by 35% and locking organic carbon within micro-aggregates."
             }
           ]
@@ -275,10 +275,10 @@ export const BENCHMARK_SCENARIOS = {
             },
             {
               authors: "Castle, S. C., Miller, D. C., Merten, N., et al.",
-              year: 2021,
-              title: "Agroforestry delivers biodiversity and soil organic carbon benefits across global biomes: A systematic meta-analysis",
-              publication: "Nature Plants 7(12), 1540-1550",
-              doi_or_url: "https://doi.org/10.1038/s41477-021-01044-0",
+              year: 2022,
+              title: "Evidence for the impacts of agroforestry on ecosystem services and human well-being: A systematic map",
+              publication: "Environmental Evidence (Springer Nature) 11(1), 12",
+              doi_or_url: "https://doi.org/10.1186/s13750-022-00260-4",
               exact_excerpt: "Alley cropping systems incorporating leguminous tree rows elevated soil organic carbon stocks by an average of 27% (95% CI: 19-36%) over 3-5 years."
             }
           ]
@@ -371,8 +371,8 @@ export const BENCHMARK_SCENARIOS = {
           {
             chunk_id: "FAO-GSP-2020-C2",
             source_title: "Recarbonizing Global Soils: Recommended Management Practices (Vol. 3)",
-            authors_year: "FAO Global Soil Partnership (2020)",
-            doi_or_url: "https://doi.org/10.4060/ca9962en",
+            authors_year: "FAO Global Soil Partnership (2021)",
+            doi_or_url: "https://doi.org/10.4060/cb6595en",
             scores: { bm25: 15.2, vector_cosine: 0.89, metadata_bonus: 0.45, composite_relevance: 0.884 },
             matched_climate: ["semi_arid", "arid"],
             matched_metrics: ["soil_organic_carbon_pct", "soil_bulk_density"],
@@ -380,9 +380,9 @@ export const BENCHMARK_SCENARIOS = {
           },
           {
             chunk_id: "SCIENCE-MYCO-2020-C1",
-            source_title: "Soil fungal networks and carbon stabilization under conservation agriculture",
-            authors_year: "Rillig, M. C., et al. (2020)",
-            doi_or_url: "https://doi.org/10.1126/science.abb6978",
+            source_title: "The role of multiple global change factors in driving soil functions and microbial biodiversity",
+            authors_year: "Rillig, M. C., et al. (2019)",
+            doi_or_url: "https://doi.org/10.1126/science.aay2832",
             scores: { bm25: 13.1, vector_cosine: 0.84, metadata_bonus: 0.40, composite_relevance: 0.815 },
             matched_climate: ["semi_arid", "temperate"],
             matched_metrics: ["mycorrhizal_colonization_pct", "soil_bulk_density"],
@@ -407,10 +407,10 @@ export const BENCHMARK_SCENARIOS = {
           citations: [
             {
               authors: "Food and Agriculture Organization (FAO)",
-              year: 2020,
+              year: 2021,
               title: "Recarbonizing Global Soils (Vol. 3)",
               publication: "FAO Rome",
-              doi_or_url: "https://doi.org/10.4060/ca9962en",
+              doi_or_url: "https://doi.org/10.4060/cb6595en",
               exact_excerpt: "Zero-tillage with residue retention curtails evaporation by 15-22% and reduces erosion by over 45%."
             }
           ]

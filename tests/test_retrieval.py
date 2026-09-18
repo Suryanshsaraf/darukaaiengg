@@ -52,6 +52,24 @@ class TestRetrieval(unittest.TestCase):
         self.assertIsNotNone(chunk)
         self.assertIn("Vicia villosa", chunk.exact_excerpt)
 
+    def test_all_curated_sources_have_valid_metadata_and_doi(self):
+        from knowledge.sources_data import CURATED_SOURCES
+        self.assertEqual(len(CURATED_SOURCES), 16)
+        for s in CURATED_SOURCES:
+            self.assertTrue(s.get("source_id"), "source_id must not be empty")
+            self.assertTrue(s.get("title"), f"title must not be empty for {s.get('source_id')}")
+            self.assertTrue(s.get("authors"), f"authors must not be empty for {s.get('source_id')}")
+            self.assertTrue(s.get("publication"), f"publication must not be empty for {s.get('source_id')}")
+            doi_or_url = s.get("doi_or_url", "")
+            self.assertTrue(
+                doi_or_url.startswith("https://doi.org/") or doi_or_url.startswith("https://") or doi_or_url.startswith("http://"),
+                f"doi_or_url invalid for {s.get('source_id')}: {doi_or_url}"
+            )
+            self.assertFalse("ca9962en" in doi_or_url, "Outdated FAO DOI found")
+            self.assertFalse("abb6978" in doi_or_url, "Outdated Science DOI found")
+            self.assertFalse("01044-0" in doi_or_url, "Outdated Nature Plants DOI found")
+            self.assertTrue(len(s.get("chunks", [])) >= 1, f"chunks missing for {s.get('source_id')}")
+
 
 if __name__ == "__main__":
     unittest.main()

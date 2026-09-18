@@ -48,6 +48,17 @@ class TestConversation(unittest.TestCase):
         self.assertEqual(enriched.climate_zone, "semi_arid")
         self.assertIsNotNone(enriched.rainfall_annual_mm)
 
+    def test_vague_input_after_plan_triggers_clarification(self):
+        session = ConversationSession()
+        # Turn 1: Valid 3-variable input creates verified plan
+        r1 = session.process_user_message("Soil organic carbon: 0.3%, rainfall: 320mm, crop: monoculture wheat")
+        self.assertEqual(r1["type"], "verified_plan")
+
+        # Turn 2: Subsequent vague query must NOT reuse previous plan, must trigger clarification
+        r2 = session.process_user_message("biodiversity is falling")
+        self.assertEqual(r2["type"], "clarification")
+        self.assertIn("soil organic carbon", r2["assistant_message"].lower())
+
 
 if __name__ == "__main__":
     unittest.main()

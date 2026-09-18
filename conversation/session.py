@@ -33,18 +33,40 @@ class ConversationSession:
         """
         self.history.append({"role": "user", "content": message})
 
-        # 1. Incrementally extract and merge entities into accumulated site profile
-        self.profile = EcologicalEntityExtractor.extract_from_text(message, self.profile)
+        # Check what variables are present in this specific message
+        fresh_profile = EcologicalEntityExtractor.extract_from_text(message)
+        extracted_vars = fresh_profile.get_critical_variables()
+
+        msg_lower = message.lower().strip()
+        vague_keywords = [
+            "biodiversity", "declining", "falling", "dropping", "decreasing",
+            "loss", "lost", "degraded", "degradation", "dying", "failing",
+            "poor", "bad", "damage", "problem", "decline"
+        ]
+        has_vague_symptom = any(k in msg_lower for k in vague_keywords)
+
+        # Check if the session previously finalized a verified plan
+        previous_had_plan = any(h.get("type") == "verified_plan" for h in self.history[:-1])
+
+        # If a previous plan was finalized and the new message does not independently have >= 3 variables,
+        # or if the message is an explicit vague problem statement with 0 variables:
+        if (previous_had_plan and len(extracted_vars) < 3) or (len(extracted_vars) == 0 and has_vague_symptom):
+            # Reset profile for the new inquiry so previous site metrics are not hallucinated/reused
+            self.profile = fresh_profile
+            self.profile.session_id = self.session_id
+        else:
+            # Multi-turn clarification continuation: incrementally merge into accumulated profile
+            self.profile = EcologicalEntityExtractor.extract_from_text(message, self.profile)
 
         # 2. Enrich if coordinates exist
         if self.profile.coordinates and not self.profile.enriched_spatially:
             self.profile = SpatialEnrichmentService.enrich_profile(self.profile)
 
-        # 3. Check sufficiency gate (requires >= 3 critical variables)
+        # 3. Check sufficiency gate (requires >= 3 interacting environmental dimensions)
         present_vars = self.profile.get_critical_variables()
-        var_count = len(present_vars)
+        present_dims = self.profile.get_represented_dimensions()
 
-        if var_count < 3:
+        if not self.profile.is_sufficient_for_diagnosis():
             # Generate targeted clarifying question
             clarification = self._generate_clarification(present_vars)
             response_payload = {
@@ -52,7 +74,8 @@ class ConversationSession:
                 "session_id": self.session_id,
                 "current_profile": self.profile.to_dict(),
                 "variables_found": list(present_vars.keys()),
-                "missing_count": 3 - var_count,
+                "dimensions_found": list(present_dims.keys()),
+                "missing_count": max(1, 3 - len(present_dims)),
                 "clarification": clarification.to_dict(),
                 "assistant_message": clarification.clarification_question
             }

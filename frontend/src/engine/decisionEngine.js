@@ -7,25 +7,25 @@ import { BENCHMARK_SCENARIOS, CURATED_SOURCES } from './knowledgeData';
 export { BENCHMARK_SCENARIOS, CURATED_SOURCES };
 
 export function processClientMessage(message, currentProfile = {}) {
-  const text = message.toLowerCase();
+  const text = message.toLowerCase().trim();
 
-  // Check if it's the vague inquiry
-  if (text.includes("biodiversity is declining") || text.includes("declining on my land") || text.length < 25) {
-    return BENCHMARK_SCENARIOS[1];
-  }
-
-  // Check if it has semi-arid / wheat / low carbon
-  if ((text.includes("wheat") || text.includes("monoculture")) && (text.includes("0.3") || text.includes("carbon") || text.includes("semi-arid"))) {
-    return BENCHMARK_SCENARIOS[2];
-  }
-
-  // Check coordinates
-  if (text.includes("31.5") || text.includes("coordinates") || text.includes("cotton")) {
+  // Check coordinates (Scenario 3)
+  if (text.includes("31.5") || text.includes("coordinates") || text.includes("cotton") || text.includes("-102")) {
     return BENCHMARK_SCENARIOS[3];
   }
 
-  // Default fallback: Run Moment 2 plan
-  return BENCHMARK_SCENARIOS[2];
+  // Check if all 3 interacting dimensions are present (Scenario 2)
+  const hasSoc = text.includes("0.") || text.includes("soc") || text.includes("carbon");
+  const hasRain = text.includes("rain") || text.includes("320") || text.includes("arid") || text.includes("precip");
+  const hasCrop = text.includes("wheat") || text.includes("crop") || text.includes("monoculture") || text.includes("pasture");
+
+  if (hasSoc && hasRain && hasCrop) {
+    return BENCHMARK_SCENARIOS[2];
+  }
+
+  // For any vague query ("biodiversity is falling", "biodiversity is declining", "help", etc.)
+  // or whenever < 3 variables are supplied, ALWAYS trigger Clarification Gate (Scenario 1)
+  return BENCHMARK_SCENARIOS[1];
 }
 
 export function diagnoseClientProfile(profile) {

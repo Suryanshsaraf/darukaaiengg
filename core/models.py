@@ -120,9 +120,36 @@ class SiteProfile:
     def present_variables_count(self) -> int:
         return len(self.get_critical_variables())
 
+    def get_represented_dimensions(self) -> Dict[str, Dict[str, Any]]:
+        """
+        Group variables into the 5 core environmental dimensions specified by the Hackathon Rubric:
+        1. Soil Health (SOC, pH, bulk density, moisture)
+        2. Water & Climate (rainfall, climate zone, aridity)
+        3. Land Use & Cover (land use, crop type)
+        4. Management & Disturbance (tillage, N rate, pesticides)
+        5. Biodiversity Indicators (canopy, ground cover, pollinators, mycorrhizae)
+        """
+        dims = {}
+        soil = {k: getattr(self, k) for k in ["soil_organic_carbon_pct", "soil_ph", "soil_bulk_density", "soil_moisture_pct"] if getattr(self, k) is not None}
+        if soil:
+            dims["soil_health"] = soil
+        climate = {k: getattr(self, k) for k in ["rainfall_annual_mm", "climate_zone", "rainfall_pattern", "aridity_index"] if getattr(self, k) is not None}
+        if climate:
+            dims["water_climate"] = climate
+        land = {k: getattr(self, k) for k in ["land_use_type", "crop_type"] if getattr(self, k) is not None}
+        if land:
+            dims["land_use"] = land
+        mgmt = {k: getattr(self, k) for k in ["tillage_practice", "synthetic_nitrogen_kg_ha", "pesticide_passes_yr"] if getattr(self, k) is not None}
+        if mgmt:
+            dims["management"] = mgmt
+        bio = {k: getattr(self, k) for k in ["canopy_cover_pct", "vegetative_ground_cover_pct", "pollinator_density_index", "shannon_diversity_index", "mycorrhizal_colonization_pct"] if getattr(self, k) is not None}
+        if bio:
+            dims["biodiversity"] = bio
+        return dims
+
     def is_sufficient_for_diagnosis(self) -> bool:
-        """System gate: requires at least 3 distinct interacting environmental variables."""
-        return self.present_variables_count() >= 3
+        """System gate: requires at least 3 distinct interacting environmental dimensions."""
+        return len(self.get_represented_dimensions()) >= 3
 
     def to_dict(self) -> Dict[str, Any]:
         d = {}

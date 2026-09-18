@@ -19,7 +19,7 @@ class EcologicalEntityExtractor:
 
         # 1. Soil Organic Carbon (SOC)
         # Matches: "soil organic carbon: 0.3%", "SOC: 0.4%", "organic carbon 0.3", "soc is 0.5%"
-        soc_match = re.search(r"(?:soil\s+organic\s+carbon|soc|organic\s+carbon)[\s:=]+([0-9]+(?:\.[0-9]+)?)\s*%?", text_lower)
+        soc_match = re.search(r"(?:soil\s+organic\s+carbon|soc|organic\s+carbon)(?:\s+is\s+|[\s:=]+)([0-9]+(?:\.[0-9]+)?)\s*%?", text_lower)
         if soc_match:
             try:
                 profile.soil_organic_carbon_pct = float(soc_match.group(1))
@@ -30,8 +30,8 @@ class EcologicalEntityExtractor:
                 profile.soil_organic_carbon_pct = 0.4
 
         # 2. Soil pH
-        # Matches: "ph: 6.5", "soil ph 5.2", "ph of 7.8"
-        ph_match = re.search(r"\b(?:soil\s+)?ph[\s:=]+([0-9]+(?:\.[0-9]+)?)\b", text_lower)
+        # Matches: "ph: 6.5", "soil ph 5.2", "ph of 7.8", "ph is 6.5"
+        ph_match = re.search(r"\b(?:soil\s+)?ph(?:\s+is\s+|\s+of\s+|[\s:=]+)([0-9]+(?:\.[0-9]+)?)\b", text_lower)
         if ph_match:
             try:
                 profile.soil_ph = float(ph_match.group(1))
@@ -39,8 +39,8 @@ class EcologicalEntityExtractor:
                 pass
 
         # 3. Soil Bulk Density
-        # Matches: "bulk density: 1.55", "bd: 1.4"
-        bd_match = re.search(r"\b(?:bulk\s+density|bd)[\s:=]+([0-9]+(?:\.[0-9]+)?)\b", text_lower)
+        # Matches: "bulk density: 1.55", "bd: 1.4", "bd is 1.5"
+        bd_match = re.search(r"\b(?:bulk\s+density|bd)(?:\s+is\s+|[\s:=]+)([0-9]+(?:\.[0-9]+)?)\b", text_lower)
         if bd_match:
             try:
                 profile.soil_bulk_density = float(bd_match.group(1))
@@ -48,8 +48,8 @@ class EcologicalEntityExtractor:
                 pass
 
         # 4. Rainfall / Precipitation
-        # Matches numeric: "rainfall: 350mm", "rainfall: 400", "precip: 300 mm"
-        rain_match = re.search(r"(?:rainfall|precipitation|precip)[\s:=]+([0-9]+(?:\.[0-9]+)?)\s*(?:mm)?", text_lower)
+        # Matches numeric: "rainfall: 350mm", "rainfall: 400", "rainfall is 320mm", "precip: 300 mm"
+        rain_match = re.search(r"(?:rainfall|precipitation|precip)(?:\s+is\s+|[\s:=]+)([0-9]+(?:\.[0-9]+)?)\s*(?:mm)?", text_lower)
         if rain_match:
             try:
                 profile.rainfall_annual_mm = float(rain_match.group(1))
@@ -90,9 +90,21 @@ class EcologicalEntityExtractor:
             profile.land_use_type = "agroforestry_silvopasture"
 
         if "crop:" in text_lower or "crop is" in text_lower:
-            c_match = re.search(r"crop(?:[\s:=]+|is\s+)([a-z0-9\s\-]+?)(?:,|$|\.|\n)", text_lower)
+            c_match = re.search(r"\bcrop(?:\s+is|[\s:=]+)\s*([a-z0-9\s\-]+?)(?:,|$|\.|\n)", text_lower)
             if c_match:
                 profile.crop_type = c_match.group(1).strip()
+                if not profile.land_use_type:
+                    profile.land_use_type = "monoculture_cropland"
+        elif "wheat" in text_lower:
+            if not profile.crop_type:
+                profile.crop_type = "monoculture wheat"
+            if not profile.land_use_type:
+                profile.land_use_type = "monoculture_cropland"
+        elif "cotton" in text_lower:
+            if not profile.crop_type:
+                profile.crop_type = "monoculture cotton"
+            if not profile.land_use_type:
+                profile.land_use_type = "monoculture_cropland"
 
         # 7. Tillage Practice
         if "no-till" in text_lower or "no till" in text_lower or "zero tillage" in text_lower:

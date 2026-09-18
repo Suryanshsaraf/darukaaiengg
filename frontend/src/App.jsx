@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import Header from './components/Header';
-import BenchmarkBar from './components/BenchmarkBar';
 import ChatInterface from './components/ChatInterface';
 import SiteMatrix from './components/SiteMatrix';
 import PlanView from './components/PlanView';
+import ScienceAuditView from './components/ScienceAuditView';
 import RetrievalTraceModal from './components/RetrievalTraceModal';
-import { MessageSquare, Sliders, Database, Sparkles, BookOpen } from 'lucide-react';
-import {
-  processClientMessage,
-  diagnoseClientProfile,
-  enrichClientCoordinates,
-  BENCHMARK_SCENARIOS
+import { 
+  processClientMessage, 
+  diagnoseClientProfile, 
+  enrichClientCoordinates, 
+  BENCHMARK_SCENARIOS 
 } from './engine/decisionEngine';
 
 export default function App() {
@@ -18,13 +17,14 @@ export default function App() {
   const [activePlan, setActivePlan] = useState(null);
   const [retrievalTrace, setRetrievalTrace] = useState(null);
   const [isTraceOpen, setIsTraceOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState('chat'); // 'chat' | 'matrix' | 'sources'
+  const [activeTab, setActiveTab] = useState('chat'); // 'chat' | 'studio' | 'report' | 'science'
+  const [isLaymanMode, setIsLaymanMode] = useState(true); // Default to Layman Friendly!
   const [isLoading, setIsLoading] = useState(false);
   const [sessionId, setSessionId] = useState(() => 'sess_' + Math.random().toString(36).substring(2, 9));
 
-  // Initialize with Benchmark 2 on start so the reviewer immediately sees high-value depth!
+  // Initialize with Benchmark 2 on startup so data is immediately available across tabs
   useEffect(() => {
-    handleSelectBenchmark(2);
+    handleSelectScenario(2, false);
   }, []);
 
   const handleSendMessage = async (text) => {
@@ -133,8 +133,8 @@ export default function App() {
     }
   };
 
-  const applyBenchmarkData = (benchmarkId, data) => {
-    if (benchmarkId === 1) {
+  const applyScenarioData = (scenarioId, data, switchTab = true) => {
+    if (scenarioId === 1) {
       setMessages([
         { role: 'user', content: 'Biodiversity is declining on my land' },
         {
@@ -145,7 +145,7 @@ export default function App() {
         }
       ]);
       setActivePlan(null);
-      setActiveTab('chat');
+      if (switchTab) setActiveTab('chat');
     } else {
       setActivePlan(data.plan);
       setRetrievalTrace(data.plan.retrieval_trace);
@@ -158,33 +158,35 @@ export default function App() {
           data: data
         }
       ]);
-      if (benchmarkId === 3) {
-        setIsTraceOpen(true);
+      if (switchTab) {
+        if (scenarioId === 3) setActiveTab('science');
+        else setActiveTab('report');
       }
     }
   };
 
-  const handleSelectBenchmark = async (benchmarkId) => {
+  const handleSelectScenario = async (scenarioId, switchTab = true) => {
     setIsLoading(true);
     try {
-      const res = await fetch(`/api/benchmarks/${benchmarkId}`);
+      const res = await fetch(`/api/benchmarks/${scenarioId}`);
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
-      applyBenchmarkData(benchmarkId, data);
+      applyScenarioData(scenarioId, data, switchTab);
     } catch (err) {
       console.warn("Backend benchmark unavailable, using client scenario:", err);
-      const fallbackData = BENCHMARK_SCENARIOS[benchmarkId] || BENCHMARK_SCENARIOS[2];
-      applyBenchmarkData(benchmarkId, fallbackData);
+      const fallbackData = BENCHMARK_SCENARIOS[scenarioId] || BENCHMARK_SCENARIOS[2];
+      applyScenarioData(scenarioId, fallbackData, switchTab);
     } finally {
       setIsLoading(false);
     }
   };
 
-  const handleReset = async () => {
+  const handleReset = () => {
     setMessages([]);
     setActivePlan(null);
     setRetrievalTrace(null);
     setSessionId('sess_' + Math.random().toString(36).substring(2, 9));
+    setActiveTab('chat');
   };
 
   const handleDownloadJson = () => {
@@ -200,85 +202,64 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col antialiased">
-      {/* 1. Header */}
-      <Header onReset={handleReset} />
+      {/* 1. Header with View Tabs & Layman Switch */}
+      <Header 
+        activeTab={activeTab}
+        onSelectTab={setActiveTab}
+        isLaymanMode={isLaymanMode}
+        onToggleLaymanMode={() => setIsLaymanMode(!isLaymanMode)}
+        onSelectScenario={handleSelectScenario}
+        onReset={handleReset}
+        onDownloadJson={handleDownloadJson}
+      />
 
-      {/* 2. Main Content Container - Full Screen Fluid Width */}
-      <main className="flex-1 w-full px-3 sm:px-5 lg:px-7 xl:px-9 py-4 space-y-4">
-        {/* Benchmark Proof Bar */}
-        <BenchmarkBar onSelectBenchmark={handleSelectBenchmark} />
+      {/* 2. Main Tabbed Content Area */}
+      <main className="flex-1 w-full px-4 sm:px-6 lg:px-8 py-5">
+        {/* Tab 1: AI Land Advisor (Conversational Mode) */}
+        {activeTab === 'chat' && (
+          <ChatInterface 
+            messages={messages}
+            onSendMessage={handleSendMessage}
+            isLoading={isLoading}
+            onSelectOption={handleSendMessage}
+            onOpenStudio={() => setActiveTab('studio')}
+            onOpenReport={() => setActiveTab('report')}
+            isLaymanMode={isLaymanMode}
+          />
+        )}
 
-        {/* 3. Core Working Area (Full Widescreen Responsive Layout) */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
-          {/* Left Column: Interactive Inputs & Dialogue (5 cols on lg, 4 cols on 2xl) */}
-          <div className="lg:col-span-5 2xl:col-span-4 space-y-3">
-            {/* Input Mode Navigation Tabs */}
-            <div className="flex rounded-xl bg-slate-900 p-1 border border-slate-800 text-xs font-semibold">
-              <button
-                onClick={() => setActiveTab('chat')}
-                className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg transition ${
-                  activeTab === 'chat'
-                    ? 'bg-emerald-600 text-white shadow-sm'
-                    : 'text-slate-400 hover:text-white'
-                }`}
-              >
-                <MessageSquare className="w-3.5 h-3.5" />
-                <span>Conversational Scientist</span>
-              </button>
-              <button
-                onClick={() => setActiveTab('matrix')}
-                className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg transition ${
-                  activeTab === 'matrix'
-                    ? 'bg-emerald-600 text-white shadow-sm'
-                    : 'text-slate-400 hover:text-white'
-                }`}
-              >
-                <Sliders className="w-3.5 h-3.5" />
-                <span>Site Parameter Matrix</span>
-              </button>
-            </div>
+        {/* Tab 2: Field Studio (Interactive Simulation & Radar) */}
+        {activeTab === 'studio' && (
+          <SiteMatrix 
+            onDiagnose={handleDiagnose}
+            onEnrichCoordinates={handleEnrichCoordinates}
+            activePlan={activePlan}
+            isLaymanMode={isLaymanMode}
+          />
+        )}
 
-            {/* Tab Views */}
-            {activeTab === 'chat' ? (
-              <ChatInterface
-                messages={messages}
-                onSendMessage={handleSendMessage}
-                isLoading={isLoading}
-                onSelectOption={handleSendMessage}
-              />
-            ) : (
-              <SiteMatrix
-                onDiagnose={handleDiagnose}
-                onEnrichCoordinates={handleEnrichCoordinates}
-              />
-            )}
-          </div>
+        {/* Tab 3: Executive Plan (Structured Action Report) */}
+        {activeTab === 'report' && (
+          <PlanView 
+            plan={activePlan}
+            onOpenTrace={() => setActiveTab('science')}
+            onDownloadJson={handleDownloadJson}
+            isLaymanMode={isLaymanMode}
+            onOpenStudio={() => setActiveTab('studio')}
+          />
+        )}
 
-          {/* Right Column: Verified Plan & Deep Scientific Proof (7 cols on lg, 8 cols on 2xl) */}
-          <div className="lg:col-span-7 2xl:col-span-8">
-            {activePlan ? (
-              <PlanView
-                plan={activePlan}
-                onOpenTrace={() => setIsTraceOpen(true)}
-                onDownloadJson={handleDownloadJson}
-              />
-            ) : (
-              <div className="bg-slate-900 border border-slate-800 rounded-2xl p-12 text-center flex flex-col items-center justify-center min-h-[460px] text-slate-500 shadow-lg">
-                <div className="w-16 h-16 rounded-2xl bg-slate-800/80 border border-slate-700/80 flex items-center justify-center text-slate-400 mb-4">
-                  <Sparkles className="w-8 h-8 text-emerald-400" />
-                </div>
-                <h3 className="text-base font-bold text-slate-200">Awaiting Complete Site Parameters</h3>
-                <p className="text-xs text-slate-400 max-w-md mt-1 leading-relaxed">
-                  Provide at least 3 interacting environmental variables (Soil Organic Carbon, Rainfall, Land Use) or click any proof moment above to generate an evidence-backed intervention portfolio.
-                </p>
-              </div>
-            )}
-          </div>
-        </div>
+        {/* Tab 4: Science, Citations & Audit Trace (For Evaluators & Auditors) */}
+        {activeTab === 'science' && (
+          <ScienceAuditView 
+            trace={retrievalTrace}
+            plan={activePlan}
+          />
+        )}
       </main>
 
-      {/* Deep Retrieval Trace Modal */}
-      <RetrievalTraceModal
+      {/* Deep Retrieval Trace Modal (Can also be opened directly) */}
+      <RetrievalTraceModal 
         isOpen={isTraceOpen}
         onClose={() => setIsTraceOpen(false)}
         trace={retrievalTrace}
